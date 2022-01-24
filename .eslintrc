@@ -1,0 +1,37 @@
+{
+    "root": true,
+    "plugins": [
+      "prettier",
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "rules": {
+      "camelcase": 0,
+      "no-duplicate-imports": 0,
+      "class-methods-use-this": 0,
+      "comma-dangle": 0,
+      "func-names": 0,
+      "no-use-before-define": ["error", { "functions": true, "classes": true }],
+      "no-var": "error",
+      "prefer-const": "error",
+      "prettier/prettier": ["error",{"endOfLine": "auto", "parser": "typescript"}]
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+      }
+    },
+    "env": {
+      "node": true,
+      "es6": true,
+      "jasmine": true,
+      "browser": true,
+        "es2021": true
+    }
+}
