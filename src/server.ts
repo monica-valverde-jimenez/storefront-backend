@@ -7,7 +7,8 @@ import orderRoutes from './handlers/orders';
 import orderProductRoutes from './handlers/orderProducts';
 import dashboardRoutes from './handlers/dashboard';
 
-const app: express.Application = express();
+export const app = express();
+
 const address: string = '0.0.0.0:3000';
 
 app.use(bodyParser.json());

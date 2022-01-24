@@ -6,13 +6,21 @@ import verifyAuthToken from '../utils/verifyAuthToken';
 const store = new UserStore();
 
 const index = async (_req: Request, res: Response) => {
-  const result = await store.index();
-  res.json(result);
+  try {
+    const result = await store.index();
+    res.json(result);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const show = async (_req: Request, res: Response) => {
-  const result = await store.index();
-  res.json(result);
+  try {
+    const result = await store.index();
+    res.json(result);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -47,8 +55,12 @@ const update = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-  const result = await store.delete(req.body.id);
-  res.json(result);
+  try {
+    const result = await store.delete(req.body.id);
+    res.json(result);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const authenticate = async (req: Request, res: Response) => {

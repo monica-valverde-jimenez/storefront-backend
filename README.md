@@ -33,6 +33,7 @@ Installation instructions below. Once you are up and running:
     BCRYPT_PASSWORD = 'replace_with_your_bcrypt_psw'
     SALT_ROUNDS = '10'
     TOKEN_SECRET = 'replace_with_your_secret_token'
+    TOKEN_FOR_TESTING = 'replace_with_your_test_token'
   ```
 1. Install project specific dependencies with `yarn`.
 1. Create database for API, It can be created using postgres dashboard or use psql commands.

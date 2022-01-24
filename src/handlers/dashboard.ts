@@ -6,23 +6,42 @@ import verifyAuthToken from '../utils/verifyAuthToken';
 const dashboard = new DashboardQueries();
 
 const productsbyCat = async (req: Request, res: Response) => {
-  const products = await dashboard.productsByCategory(req.params.categoryId);
-  res.json(products);
+  try {
+    const products = await dashboard.productsByCategory(req.params.categoryId);
+    res.json(products);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const getPopularProducts = async (req: Request, res: Response) => {
-  const products = await dashboard.getTopFiveProducts(req.params.status);
-  res.json(products);
+  try {
+    const products = await dashboard.getTopFiveProducts(req.params.status);
+    res.json(products);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const getCompleteOrder = async (req: Request, res: Response) => {
-  const products = await dashboard.ordersByUser(req.params.userId, 'complete');
-  res.json(products);
+  try {
+    const products = await dashboard.ordersByUser(
+      req.params.userId,
+      'complete'
+    );
+    res.json(products);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const getActiveOrder = async (req: Request, res: Response) => {
-  const products = await dashboard.ordersByUser(req.params.userId, 'active');
-  res.json(products);
+  try {
+    const products = await dashboard.ordersByUser(req.params.userId, 'active');
+    res.json(products);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const dashboardRoutes = (app: express.Application) => {

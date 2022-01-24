@@ -240,4 +240,89 @@ Request Headers:
     authorization: Bearer [auhorization-token]
 ```
 
+## Database Shema
+
+shopping
+  |_ Tables
+        |
+        |_  categories
+            users
+            products
+            orders
+            order_products
+
+
+## Database Shape
+
+### Users
+
+     Column      |          Type          | Collation | Nullable |              Default
+-----------------+------------------------+-----------+----------+-----------------------------------
+ id              | integer                |           | not null | nextval('users_id_seq'::regclass)
+ first_name      | character varying(100) |           | not null | 
+ last_name       | character varying(100) |           |          |
+ username        | character varying(100) |           | not null |
+ password_digest | character varying      |           | not null |
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+
+### Categories
+
+ Column |          Type          | Collation | Nullable |                Default
+--------+------------------------+-----------+----------+----------------------------------------
+ id     | integer                |           | not null | nextval('categories_id_seq'::regclass)
+ name   | character varying(100) |           |          |
+Indexes:
+    "categories_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "products" CONSTRAINT "products_category_id_fkey" FOREIGN KEY (category_id) REFERENCES categories(id)
+
+### Products
+
+   Column    |          Type          | Collation | Nullable |               Default
+-------------+------------------------+-----------+----------+--------------------------------------
+ id          | integer                |           | not null | nextval('products_id_seq'::regclass)
+ category_id | integer                |           |          |
+ name        | character varying(150) |           | not null |
+ price       | numeric(5,2)           |           |          |
+Indexes:
+    "products_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "products_category_id_fkey" FOREIGN KEY (category_id) REFERENCES categories(id)
+Referenced by:
+    TABLE "order_products" CONSTRAINT "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+
+### Orders
+
+ Column      |       Type        | Collation | Nullable |              Default
+-----------------+-------------------+-----------+----------+------------------------------------
+ id              | integer           |           | not null | nextval('orders_id_seq'::regclass)
+ user_id         | integer           |           | not null |
+ category_status | character varying |           | not null |
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Check constraints:
+    "orders_category_status_check" CHECK (category_status::text = 'active'::text OR category_status::text = 'complete'::text)
+Foreign-key constraints:
+    "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+Referenced by:
+    TABLE "order_products" CONSTRAINT "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+
+### Orders detail
+
+   Column   |  Type   | Collation | Nullable |                  Default
+------------+---------+-----------+----------+--------------------------------------------
+ id         | integer |           | not null | nextval('order_products_id_seq'::regclass)
+ quantity   | integer |           | not null |
+ order_id   | integer |           | not null |
+ product_id | integer |           | not null |
+Indexes:
+    "order_products_pkey" PRIMARY KEY, btree (id)
+Check constraints:
+    "order_products_quantity_check" CHECK (quantity >= 0)
+Foreign-key constraints:
+    "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+    "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
 

@@ -4,13 +4,21 @@ import { Category, CategoryStore } from '../models/category';
 const store = new CategoryStore();
 
 const index = async (_req: Request, res: Response) => {
-  const categories = await store.index();
-  res.json(categories);
+  try {
+    const categories = await store.index();
+    res.json(categories);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const show = async (_req: Request, res: Response) => {
-  const categories = await store.index();
-  res.json(categories);
+  try {
+    const categories = await store.index();
+    res.json(categories);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -39,8 +47,12 @@ const update = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.body.id);
+    res.json(deleted);
+  } catch (error) {
+    res.status(401).json({ error });
+  }
 };
 
 const categoryRoutes = (app: express.Application) => {

@@ -47,7 +47,7 @@ export class OrderStore {
       conn.release();
 
       return data;
-    } catch (err) {      
+    } catch (err) {
       throw new Error(
         `Could not create with User id ${order.userId}. Error: ${err}`
       );
