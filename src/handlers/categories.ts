@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Category, CategoryStore } from '../models/category';
+import verifyAuthToken from '../utils/verifyAuthToken';
 
 const store = new CategoryStore();
 
@@ -58,9 +59,9 @@ const destroy = async (req: Request, res: Response) => {
 const categoryRoutes = (app: express.Application) => {
   app.get('/categories', index);
   app.get('/categories/:id', show);
-  app.post('/categories', create);
-  app.put('/categories', update);
-  app.delete('/categories', destroy);
+  app.post('/categories', verifyAuthToken , create);
+  app.put('/categories', verifyAuthToken,  update);
+  app.delete('/categories', verifyAuthToken, destroy);
 };
 
 export default categoryRoutes;

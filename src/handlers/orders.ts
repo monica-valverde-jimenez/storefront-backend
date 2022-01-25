@@ -61,7 +61,7 @@ const destroy = async (req: Request, res: Response) => {
 
 const orderRoutes = (app: express.Application) => {
   app.get('/orders', verifyAuthToken, index);
-  app.get('/orders/:id', show);
+  app.get('/orders/:id', verifyAuthToken, show);
   app.post('/orders', verifyAuthToken, create);
   app.put('/orders', verifyAuthToken, update);
   app.delete('/orders', verifyAuthToken, destroy);

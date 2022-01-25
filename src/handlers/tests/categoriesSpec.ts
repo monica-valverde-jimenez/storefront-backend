@@ -1,8 +1,11 @@
 import supertest from 'supertest';
+import dotenv from 'dotenv';
 import { app } from '../../server';
 import { CategoryStore } from '../../models/category';
 
 const request = supertest(app);
+dotenv.config();
+const TOKEN = process.env.TOKEN_FOR_TESTING;
 
 describe('Test categories endpoint', () => {
   it('get categories list endpoint', async (done) => {
@@ -22,7 +25,8 @@ describe('Test categories endpoint', () => {
       // @ts-ignore
       Promise.resolve({})
     );
-    const response = await request.post('/categories');
+    const response = await request.post('/categories')
+      .set('authorization', 'Bearer ' + TOKEN);
     expect(response.status).toBe(200);
     done();
   });
@@ -32,7 +36,8 @@ describe('Test categories endpoint', () => {
       // @ts-ignore
       Promise.resolve({})
     );
-    const response = await request.put('/categories');
+    const response = await request.put('/categories')
+      .set('authorization', 'Bearer ' + TOKEN);
     expect(response.status).toBe(200);
     done();
   });
@@ -42,7 +47,8 @@ describe('Test categories endpoint', () => {
       // @ts-ignore
       Promise.resolve({})
     );
-    const response = await request.delete('/categories');
+    const response = await request.delete('/categories')
+      .set('authorization', 'Bearer ' + TOKEN);
     expect(response.status).toBe(200);
     done();
   });
